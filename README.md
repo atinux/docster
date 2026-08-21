@@ -14,6 +14,11 @@ npx skills add atinux/docster
 
 See [SKILL.md](./SKILL.md)
 
+## Credits
+
+- [docs-writer](https://www.skills.sh/google-gemini/gemini-cli/docs-writer) skill by Gemini CLi
+- [Vue Docs Writing Guide](https://github.com/vuejs/docs/blob/main/.github/contributing/writing-guide.md)
+
 ## License
 
 Published under [MIT License](./LICENCE).

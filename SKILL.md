@@ -32,16 +32,25 @@ Adopt a tone that balances professionalism with a helpful, conversational approa
 - **Global Audience:** Write in standard US English. Avoid idioms and cultural references.
 - **Requirements:** Be clear about requirements ("must") vs. recommendations ("we recommend"). Avoid "should."
 - **Word Choice:** Avoid "please" and anthropomorphism (for example, "the server thinks"). Use contractions (don't, it's).
+- **Reader confidence:** Don't characterize a task or concept as "easy,"
+  "simple," "just," "obvious," or "straightforward." These words can dismiss
+  a reader's difficulty without helping them proceed.
+- **Rationale:** Don't appeal to authority with phrases such as "best practice."
+  Explain the problem, benefit, cost, and relevant tradeoffs instead.
 
 ### Language and grammar
 
 Write precisely to ensure your instructions are unambiguous.
 
 - **Abbreviations:** Avoid Latin abbreviations; use "for example" (not "e.g.") and "that is" (not "i.e.").
+- **Names:** Avoid unclear or nonstandard abbreviations in prose and code
+  examples. Keep abbreviations that are part of an API or familiar to the
+  intended audience, and define unfamiliar ones on first use.
 - **Punctuation:** Use the serial comma. Place periods and commas inside quotation marks.
+- **Example introductions:** End a sentence that directly introduces an
+  example with a colon.
 - **Dates:** Use unambiguous formats (for example, "January 22, 2026").
 - **Conciseness:** Use "lets you" instead of "allows you to." Use precise, specific verbs.
-- **Examples:** Use meaningful names in examples; avoid placeholders like "foo" or "bar." Prioritize common use cases, keep examples focused, and don't add examples that obscure the main path.
 
 ### Formatting and syntax
 
@@ -57,6 +66,30 @@ Apply consistent formatting to make documentation visually organized and accessi
 - **UI and code:** Use **bold** for UI elements and `code font` for filenames, snippets, commands, and API elements. Focus on the task when discussing interaction.
 - **Accessibility:** Use semantic HTML elements correctly (headings, lists, tables).
 - **Media:** Use lowercase hyphenated filenames. Provide descriptive alt text for all images.
+- **Emojis:** Avoid decorative emojis unless the project's established style
+  uses them or an emoji conveys necessary meaning with an accessible label.
+- **Callouts:** Use callouts sparingly for information that genuinely needs to
+  interrupt the main flow. Never stack callouts. If a page needs several tips
+  or caveats, integrate them into the relevant section or create a dedicated
+  section.
+
+### Code examples
+
+Treat code examples as part of the explanation, not decoration. Optimize them
+for comprehension and practical reuse.
+
+- **Context:** Make examples runnable in their declared environment. Include
+  required setup and imports, or state clearly what has been omitted.
+- **Focus:** Introduce one new concept at a time. Don't make readers learn an
+  unrelated API or abstraction to understand the current topic.
+- **Names:** Use specific, relatable names instead of placeholders such as
+  `foo`, `bar`, or `ComponentA`.
+- **Scope:** Show the smallest complete example that demonstrates the concept.
+  Add variants only for common use cases or important tradeoffs.
+- **Conventions:** Follow the project's current recommended syntax and code
+  style. Label pseudocode and intentionally incomplete snippets.
+- **Explanation:** Prefer showing a concrete example over describing code that
+  readers could understand more quickly by seeing it.
 
 ### Comark components
 
@@ -144,6 +177,9 @@ You can also find the components used as prop in the `<Markdown>` or `<MarkdownD
 - **Use relative or root-relative links in docs:** Follow the project's
   existing link style, and verify every link resolves to a real page. Meta
   files such as `README.md` and `CONTRIBUTING.md` may use absolute URLs.
+- **Learning paths:** When linking to optional or advanced material from a
+  tutorial or guide, tell readers whether they need it now or can return to it
+  later.
 - **When changing headings, check for deep links:** If you change a heading,
   check for deep links to that heading in other pages and update accordingly.
 
@@ -153,11 +189,20 @@ Organize content so readers can find the main path quickly and build knowledge
 in the right order.
 
 - **BLUF:** Start with an introduction explaining what to expect.
-- **Headings:** Use concise, descriptive headings in a logical hierarchy.
+- **Headings:** Use concise, descriptive headings in a logical hierarchy. When
+  useful, name the reader's task, question, or problem rather than only the
+  feature or mechanism.
+- **Problem first:** Explain the problem and when it matters before presenting
+  the solution. Give readers enough context to decide whether the section is
+  relevant to them.
+- **Assumed knowledge:** State prerequisites near the beginning and link to
+  resources for knowledge that isn't common to the intended audience.
+- **Concept pacing:** Introduce one new concept at a time whenever possible in
+  both prose and examples.
 - **Front-loading:** Start paragraphs and list items with the concept or action
   that helps readers decide whether the content is relevant.
 - **Ordering:** Present prerequisites before the concepts or tasks that depend
-  on them. In tutorials, introduce foundational tasks before advanced ones.
+  on them. Teach high-value, low-effort concepts before advanced or niche ones.
 - **Content types:** Separate tutorials and examples from dense reference
   material when combining them makes either harder to scan.
 - **Procedures:**
@@ -176,6 +221,24 @@ in the right order.
 - **Avoid using a table of contents:** If a manually written table of
   contents is present, remove it (docs sites generate their own).
 - **Next steps:** Conclude with a "Next steps" section if applicable.
+
+### Content types
+
+Match the depth and structure of a page to its purpose. Don't force every page
+into the same narrative shape.
+
+- **Getting started:** Give readers the shortest reliable path to initial
+  value. Explain what the project solves, why they might use it, and where to
+  continue.
+- **Tutorials and guides:** Build knowledge sequentially, declare
+  prerequisites, and introduce complexity gradually. Keep optional detours from
+  breaking the main learning path.
+- **How-to guides:** Focus on one practical outcome. Provide the conditions,
+  steps, and verification needed to complete the task.
+- **Reference:** Cover the stated scope completely with a predictable,
+  skimmable structure. Prefer concise entries over a continuous narrative.
+- **Migration guides:** State the source and target versions, explain why the
+  behavior changed, and provide concrete migration steps.
 
 ### Maintenance and discoverability
 
@@ -207,7 +270,9 @@ Before modifying any documentation, thoroughly investigate the request and the s
     and the scope of the change. Differentiate between writing new content and
     editing existing content. If the request is ambiguous (for example, "fix
     the docs"), ask for clarification.
-2.  **Investigate:** Examine the relevant source code for accuracy.
+2.  **Investigate:** Examine the relevant source code for accuracy. If the
+    behavior is inconsistent or unusually difficult to explain, report the
+    discrepancy instead of inventing a rationale or documenting around it.
 3.  **Audit:** Read the latest versions of the relevant docs files.
 4.  **Connect:** Identify all referencing pages if changing behavior. Check
     whether site navigation, cross-links, and likely entry points need updates
@@ -245,8 +310,9 @@ documentation.
 Perform a final quality check to ensure that all changes are correctly formatted and that all links are functional.
 
 1.  **Accuracy:** Ensure content accurately reflects the implementation and technical behavior.
-2.  **Self-review:** Re-read changes for formatting, correctness,
-    skimmability, and flow.
+2.  **Self-review:** Re-read changes from the perspective of a reader who has
+    only the stated prerequisites. Check formatting, correctness, mental
+    effort, skimmability, and flow.
 3.  **Coverage:** Confirm the change fully covers its stated scope and answers
     the likely questions for its intended reader. Clearly disclose any
     intentional gaps.
