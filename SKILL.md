@@ -52,6 +52,30 @@ Write precisely to ensure your instructions are unambiguous.
 - **Dates:** Use unambiguous formats (for example, "January 22, 2026").
 - **Conciseness:** Use "lets you" instead of "allows you to." Use precise, specific verbs.
 
+### Sentence-level limits
+
+These limits come from [ASD-STE100 Simplified Technical English](https://www.asd-ste100.org/),
+a controlled language for technical documentation. Apply them as strong
+defaults, not as the full specification: keep the conversational tone and
+contractions described above.
+
+- **Sentence length:** Keep sentences in procedures to 20 words or fewer, and
+  descriptive sentences to 25 words or fewer. Split longer sentences.
+- **One instruction per sentence:** Give each step one action. Split "Install
+  the package, add it to your config, and restart the server" into separate
+  steps, unless the actions must happen at the same time.
+- **One term, one meaning:** Pick one word for each concept and use it
+  everywhere. Don't alternate between synonyms (for example, "collection,"
+  "set," and "group") for variety. Don't reuse a term for a different concept.
+- **Noun clusters:** Don't chain more than three nouns. Rewrite "cache
+  invalidation strategy configuration" as "the configuration for the cache
+  invalidation strategy."
+- **Paragraphs:** Cover one topic per paragraph, and keep paragraphs to six
+  sentences or fewer.
+- **Complete sentences:** Don't remove articles ("the," "a") or "that" to make
+  text shorter. Telegraphic text is harder to parse, especially for
+  non-native readers.
+
 ### Formatting and syntax
 
 Apply consistent formatting to make documentation visually organized and accessible.
@@ -90,6 +114,42 @@ for comprehension and practical reuse.
   style. Label pseudocode and intentionally incomplete snippets.
 - **Explanation:** Prefer showing a concrete example over describing code that
   readers could understand more quickly by seeing it.
+- **Interactive examples:** If the project has a playground or live-example
+  component, use it for examples that readers will want to change and run.
+
+### Diagrams
+
+Use a diagram when a reader can understand a relationship faster by seeing it
+than by reading about it.
+
+- **When to use:** Add a diagram for request or data flows, lifecycles, state
+  machines, architecture overviews, and decision trees. A paragraph full of
+  "first," "then," "unless," and "after that" is a good candidate.
+- **When not to use:** Don't add a diagram for a linear procedure that a
+  numbered list already explains, or only to decorate a page.
+- **Format:** Use Mermaid in a fenced code block (` ```mermaid `). Comark
+  docs and GitHub both render it. Mermaid diagrams are text, so they are
+  reviewable in diffs and easy to update when the code changes. Don't use
+  exported images for diagrams that describe code behavior.
+- **Focus:** Show one concept per diagram. Keep it to about 10 nodes or
+  fewer; split larger diagrams or link to a dedicated page.
+- **Labels:** Use the same terms in the diagram as in the prose and the code.
+- **Accessibility:** Introduce every diagram with a sentence that states what
+  it shows. The surrounding text must contain the essential information, so
+  readers who can't see the diagram don't miss anything.
+
+Example:
+
+````md
+The following diagram shows how a request reaches the cache:
+
+```mermaid
+flowchart LR
+  Request --> Cache{Cached?}
+  Cache -- Yes --> Response
+  Cache -- No --> Handler --> Response
+```
+````
 
 ### Comark components
 
@@ -301,7 +361,7 @@ documentation.
 - **Clarity:** Correct awkward wording, spelling, and grammar. Rephrase
   sentences to make them easier for users to understand.
 - **Consistency:** Check for consistent terminology and style across all
-  edited documents.
+  edited documents (see "One term, one meaning").
 - **Duplication:** Consolidate overlapping explanations or link to their
   canonical source when doing so doesn't disrupt the reader's task.
 
@@ -313,12 +373,16 @@ Perform a final quality check to ensure that all changes are correctly formatted
 2.  **Self-review:** Re-read changes from the perspective of a reader who has
     only the stated prerequisites. Check formatting, correctness, mental
     effort, skimmability, and flow.
-3.  **Coverage:** Confirm the change fully covers its stated scope and answers
+3.  **Sentence check:** Split sentences that exceed the "Sentence-level limits."
+    Confirm that each concept uses one term across all edited files.
+4.  **Diagram check:** Confirm that each diagram renders, matches the current
+    code, uses the same terms as the prose, and has an introductory sentence.
+5.  **Coverage:** Confirm the change fully covers its stated scope and answers
     the likely questions for its intended reader. Clearly disclose any
     intentional gaps.
-4.  **Link check:** Verify all new and existing links leading to or from
+6.  **Link check:** Verify all new and existing links leading to or from
     modified pages. If you changed a heading, ensure that any links that lead to
     it are updated.
-5.  **Format:** If the project defines a format or lint command (check
+7.  **Format:** If the project defines a format or lint command (check
     `package.json` scripts), ask to run it once all changes are complete. If the
     user confirms, execute the command.
